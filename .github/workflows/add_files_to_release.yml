@@ -20,7 +20,7 @@ jobs:
       image:  continuumio/miniconda3:
 
     steps:
-      - name: create files
+        name: create files
         uses: actions/checkout@v2
         run: |
           touch file1.txt
