@@ -27,8 +27,8 @@ jobs:
         run: |
           touch file1.txt
           touch file2.txt
-          apt-get update
-          apt-get install zip
+          apt-get -y update
+          apt-get -y install zip
           zip attached_files.zip file1.txt file2.txt README.md
 
       - name: Upload artifact for CI
