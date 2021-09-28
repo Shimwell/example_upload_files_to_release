@@ -29,17 +29,17 @@ jobs:
           zip attached_files.zip file1.txt file2.txt README.md
       - uses: actions/checkout@v2
 
-        - name: Upload artifact for CI
-          uses: actions/upload-artifact@v2
-          with:
-            name: attached_files.zip
-            path: attached_files.zip
-            if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn` 
+      - name: Upload artifact for CI
+        uses: actions/upload-artifact@v2
+        with:
+          name: attached_files.zip
+          path: attached_files.zip
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn` 
 
-        - name: Upload files into the release
-          uses: svenstaro/upload-release-action@v2
-          with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            file: attached_files.zip
-            asset_name: attached_files.zip
-            tag: ${{ github.ref }}
+      - name: Upload files into the release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: attached_files.zip
+          asset_name: attached_files.zip
+          tag: ${{ github.ref }}
