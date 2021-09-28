@@ -3,7 +3,6 @@ name: add files to release
 on:
   # allows us to run workflows manually
   workflow_dispatch:
-  push:
 
   release:
     types: # This configuration does not affect the page_build event above
