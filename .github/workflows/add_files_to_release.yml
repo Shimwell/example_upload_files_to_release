@@ -1,0 +1,44 @@
+name: Linux builds
+
+on:
+  # allows us to run workflows manually
+  workflow_dispatch:
+
+  release:
+    types: # This configuration does not affect the page_build event above
+      - published
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  building-plugin:
+    runs-on: ubuntu-latest
+
+    name: 'create_files'
+
+    container:
+      image:  continuumio/miniconda3:
+
+    steps:
+      - name: create files
+        uses: actions/checkout@v2
+        run: |
+          touch file1.txt
+          touch file2.txt
+          apt-get install zip
+          zip attached_files.zip file1.txt file2.txt README.md
+
+        name: Upload artifact for CI
+        uses: actions/upload-artifact@v2
+        with:
+          name: attached_files.zip
+          path: attached_files.zip
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn` 
+
+        name: Upload files into the release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: attached_files.zip
+          asset_name: attached_files.zip
+          tag: ${{ github.ref }}
